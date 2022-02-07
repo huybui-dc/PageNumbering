@@ -1,12 +1,12 @@
-const itemList = document.querySelector(".contact-list");
+const maxItemsPerPage = 10,
+itemList = document.querySelector(".contact-list"),
+items = Array.from(document.querySelectorAll(".contact-item")), 
+itemCount = items.length,   
+numberOfPages = Math.ceil(itemCount / maxItemsPerPage);
+
 // Inserting pagination
 itemList.insertAdjacentHTML('afterend', `<div class="pagination" id="yeet"><li></li></div>`);
-
-const maxItemsPerPage = 10,
-items = Array.from(document.querySelectorAll(".contact-item")), 
-itemCount = items.length,  
-pagination = document.querySelector(".pagination li"), 
-numberOfPages = Math.ceil(itemCount / maxItemsPerPage);
+const pagination = document.querySelector(".pagination li");
 
 // Displaying page numbers
 for (var i = 1; i <= numberOfPages; i++) {
@@ -15,11 +15,11 @@ for (var i = 1; i <= numberOfPages; i++) {
     var pageItem = document.getElementById(`page-${i}`);
     pageItem.addEventListener('click', (e) => {
         e.preventDefault(); // Prevent page reload
-        displayItemsFromPageNumber(Number(e.target.text));
+        displayItemsFromPage(Number(e.target.text));
     });
 }
 
-function displayItemsFromPageNumber(pageNumber) {
+function displayItemsFromPage(pageNumber) {
     highlightPage(pageNumber);
     itemList.innerHTML = ""; // Emptying list
 
@@ -31,7 +31,7 @@ function displayItemsFromPageNumber(pageNumber) {
     // Adding items to list
     for (var i = firstItemIndex; i < lastItemIndex; i++)
         itemList.insertAdjacentElement('beforeend', items[i]);
-} displayItemsFromPageNumber(1); // Display first page by default
+} displayItemsFromPage(1); // Display first page by default
 
 function highlightPage(pageNumber) {
     // Un-highlighting all pages
